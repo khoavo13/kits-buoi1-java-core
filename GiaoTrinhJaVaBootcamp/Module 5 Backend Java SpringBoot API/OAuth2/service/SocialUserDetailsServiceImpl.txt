@@ -1,0 +1,20 @@
+@Service
+public class SocialUserDetailsServiceImpl implements SocialUserDetailsService {
+
+    @Autowired
+    private UserDetailsService userDetailService;
+
+    // After user created by ConnectionSignUpImpl.execute(Connection<?>)
+    // This method is called by the Spring Social API.
+    @Override
+    public SocialUserDetails loadUserByUserId(String userName) throws UsernameNotFoundException, DataAccessException {
+
+        System.out.println("SocialUserDetailsServiceImpl.loadUserByUserId=" + userName);
+
+        // See UserDetailServiceImpl.
+        UserDetails userDetails = ((UserDetailsServiceImpl) userDetailService).loadUserByUsername(userName);
+
+        return (SocialUserDetailsImpl) userDetails;
+    }
+
+}
